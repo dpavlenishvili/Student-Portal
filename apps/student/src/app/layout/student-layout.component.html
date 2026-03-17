@@ -2,22 +2,27 @@
   <main class="app-content">
     <router-outlet />
   </main>
-  <nav class="bottom-nav">
-    <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}" class="nav-item">
-      <i class="fas fa-house"></i>
-      <span>მთავარი</span>
-    </a>
-    <a routerLink="/services" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}" class="nav-item">
-      <i class="fas fa-grip"></i>
-      <span>სერვისები</span>
-    </a>
-    <a routerLink="/mobility" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}" class="nav-item">
-      <i class="fas fa-right-left"></i>
-      <span>მობილობა</span>
-    </a>
-    <a routerLink="/profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}" class="nav-item">
-      <i class="fas fa-user"></i>
-      <span>პროფილი</span>
-    </a>
-  </nav>
 </div>
+
+<!-- nav is a SIBLING of app-shell, not a child.
+     app-shell has transform:translateX(-50%) which would make it a containing
+     block for fixed children — nav would then be fixed relative to the shell,
+     not the viewport.  As a sibling it is truly viewport-fixed. -->
+<nav class="bottom-nav" [class.dark]="theme.isDark()">
+  <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}" class="nav-item">
+    <i class="fas fa-house"></i>
+    <span>მთავარი</span>
+  </a>
+  <a routerLink="/services" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}" class="nav-item">
+    <i class="fas fa-grip"></i>
+    <span>სერვისები</span>
+  </a>
+  <a routerLink="/mobility" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}" class="nav-item">
+    <i class="fas fa-right-left"></i>
+    <span>მობილობა</span>
+  </a>
+  <a routerLink="/profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}" class="nav-item">
+    <i class="fas fa-user"></i>
+    <span>პროფილი</span>
+  </a>
+</nav>

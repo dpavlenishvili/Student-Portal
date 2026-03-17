@@ -1,10 +1,11 @@
+// NAV HEIGHT token — single source of truth
+$nav-h: 4rem;
+
 .app-shell {
-  // position: fixed + top/bottom: 0 fills the EXACT viewport on iOS PWA.
-  // 100dvh is unreliable on iOS — it can exclude the home-indicator zone,
-  // leaving a gap below the nav. fixed + inset fills to the true screen edge.
   position: fixed;
   top: 0;
-  bottom: 0;
+  // Leave room at the bottom for the nav bar
+  bottom: $nav-h;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -15,7 +16,7 @@
   flex-direction: column;
   overflow: hidden;
   box-shadow: 0 0 60px rgb(0 0 0 / 0.15);
-  // Extend behind the iOS status bar
+  // Push content below the iOS status bar / Dynamic Island
   padding-top: env(safe-area-inset-top, 0);
 }
 
@@ -27,18 +28,28 @@
   overscroll-behavior-y: contain;
 }
 
+// ── Bottom nav — truly viewport-fixed, no transform ancestor ──────────────
+// Lives as a SIBLING of .app-shell in the DOM so that the shell's
+// transform:translateX(-50%) does NOT create a containing block for it.
+// bottom:0 therefore means the physical screen bottom on iOS PWA.
 .bottom-nav {
-  // No position: fixed — the flex column layout pins this to the bottom naturally.
-  // position: fixed inside overflow: hidden breaks on iOS PWA (misaligns the nav).
-  flex-shrink: 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: $nav-h;
+  z-index: 200;
   background: var(--portal-surface);
   border-top: 1px solid var(--portal-border);
   display: flex;
   align-items: stretch;
-  // No padding-bottom — nav icons fill all the way to the screen bottom.
-  // iOS home indicator floats on top as a thin overlay, not blocking icons.
-  z-index: 100;
   box-shadow: 0 -2px 10px rgb(0 0 0 / 0.05);
+
+  // Dark-mode colours come from the class toggled on this element directly
+  &.dark {
+    background: var(--portal-surface);
+    border-top-color: var(--portal-border);
+  }
 }
 
 .nav-item {
