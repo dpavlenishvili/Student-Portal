@@ -1,0 +1,7 @@
+@use '@fontsource/noto-sans-georgian/index.css';
+@use '@fortawesome/fontawesome-free/css/all.min.css';
+@use '../../../libs/shared-styles/src/index' as *;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
