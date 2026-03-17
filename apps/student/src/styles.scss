@@ -22,6 +22,13 @@ html, body {
   // Setting it here breaks -webkit-overflow-scrolling on some iOS versions
 }
 
+// ThemeService already toggles .dark on <html>.
+// This fills any gap below 100dvh on iOS PWA (home indicator zone) with the
+// correct surface color so it's invisible instead of showing OS background.
+html {
+  background: var(--portal-surface);
+}
+
 // Prevent text selection on interactive nav elements (feels native)
 .nav-item, .bottom-nav {
   user-select: none;
