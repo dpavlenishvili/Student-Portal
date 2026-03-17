@@ -1,14 +1,19 @@
 .app-shell {
+  // position: fixed + top/bottom: 0 fills the EXACT viewport on iOS PWA.
+  // 100dvh is unreliable on iOS — it can exclude the home-indicator zone,
+  // leaving a gap below the nav. fixed + inset fills to the true screen edge.
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
   max-width: 28rem;
-  // MUST be height (not min-height) so flex children get a bounded scroll region
-  height: 100dvh;
-  box-sizing: border-box; // padding-top is included in the 100dvh
-  margin-inline: auto;
+  box-sizing: border-box;
   background: var(--portal-surface);
   display: flex;
   flex-direction: column;
-  position: relative;
-  overflow: hidden; // contain scroll inside app-content only
+  overflow: hidden;
   box-shadow: 0 0 60px rgb(0 0 0 / 0.15);
   // Extend behind the iOS status bar
   padding-top: env(safe-area-inset-top, 0);
