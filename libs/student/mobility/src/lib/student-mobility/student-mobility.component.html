@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col">
-  <!-- Header -->
-  <div class="bg-white dark:bg-slate-800 px-6 py-4 shadow-sm sticky top-0 z-20 flex justify-between items-center border-b border-slate-100 dark:border-slate-700">
+  <!-- Header — Bug 1: sticky safe-top clears the iOS status bar / Dynamic Island -->
+  <div class="bg-white dark:bg-slate-800 px-6 py-4 shadow-sm sticky safe-top z-20 flex justify-between items-center border-b border-slate-100 dark:border-slate-700">
     <h1 class="text-xl font-bold text-slate-900 dark:text-white">მობილობა</h1>
     <div class="px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded text-[10px] font-bold text-slate-500 uppercase">
       {{ store.mobilityWindowOpen() ? 'ეტაპი: აქტიური' : 'ეტაპი: დახურული' }}
@@ -154,9 +154,9 @@
     }
   </div>
 
-  <!-- Edit Modal -->
+  <!-- Edit Modal — Bug 2: z-[200] > bottom-nav z-100 so modal is always on top -->
   @if (editingApplication(); as editApp) {
-    <div class="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
+    <div class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center">
       <!-- Backdrop -->
       <div class="absolute inset-0 bg-black/50" (click)="closeEditModal()"></div>
 
@@ -210,9 +210,9 @@
     </div>
   }
 
-  <!-- Delete Confirmation Modal -->
+  <!-- Delete Confirmation Modal — Bug 2: z-[200] > bottom-nav z-100 -->
   @if (deletingApplicationId() !== null) {
-    <div class="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
+    <div class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center">
       <!-- Backdrop -->
       <div class="absolute inset-0 bg-black/50" (click)="cancelDelete()"></div>
 

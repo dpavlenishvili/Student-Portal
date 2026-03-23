@@ -31,7 +31,11 @@
 
 .bottom-nav {
   flex-shrink: 0;
-  height: 4rem;
+  // Bug 6: extend into home-indicator zone on gesture-based iPhones.
+  // Items sit in the 4rem area; padding-bottom pushes the bar into the
+  // safe-area so the home indicator never overlaps nav items.
+  height: calc(4rem + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   background: var(--portal-surface);
   border-top: 1px solid var(--portal-border);
   display: flex;
@@ -50,7 +54,8 @@
   padding: var(--portal-sp-3) var(--portal-sp-2);
   color: var(--portal-text-muted);
   text-decoration: none;
-  font-size: 0.625rem;
+  // Bug 11: Apple HIG minimum label size is ~11pt; 0.625rem = 10px fails.
+  font-size: 0.6875rem; // 11px
   font-weight: 500;
   transition: color 0.2s;
   position: relative;
@@ -61,7 +66,7 @@
   }
 
   span {
-    font-size: 0.625rem;
+    font-size: 0.6875rem; // 11px — meets Apple HIG minimum
     line-height: 1;
   }
 
