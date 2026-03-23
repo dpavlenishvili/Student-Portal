@@ -18,33 +18,12 @@
   <meta name="apple-mobile-web-app-title" content="პორტალი" />
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
 
-  <!-- iOS Splash Screens (portrait, common iPhone sizes) -->
-  <link rel="apple-touch-startup-image" media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="icons/splash-430x932.png" />
-  <link rel="apple-touch-startup-image" media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="icons/splash-393x852.png" />
-  <link rel="apple-touch-startup-image" media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="icons/splash-390x844.png" />
-  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="icons/splash-375x812.png" />
-  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="icons/splash-414x896.png" />
-
   <!-- Android / standard -->
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
   <!-- Prevent phone number detection -->
   <meta name="format-detection" content="telephone=no" />
-
-  <!-- FOUC prevention: apply dark class before Angular bootstraps so there
-       is no white flash on cold launch when the user has dark mode saved -->
-  <script>
-    (function () {
-      try {
-        var saved = localStorage.getItem('portal_theme');
-        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (saved === 'dark' || (!saved && prefersDark)) {
-          document.documentElement.classList.add('dark');
-        }
-      } catch (e) {}
-    })();
-  </script>
 </head>
 <body>
   <app-root></app-root>

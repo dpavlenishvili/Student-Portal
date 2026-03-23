@@ -1,5 +1,4 @@
 {
-  "id": "/",
   "name": "სტუდენტის პორტალი",
   "short_name": "პორტალი",
   "description": "სტუდენტის პირადი კაბინეტი",
@@ -22,15 +21,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "icons/screenshot-mobile.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "სტუდენტის პორტალი — მთავარი გვერდი"
     }
   ]
 }

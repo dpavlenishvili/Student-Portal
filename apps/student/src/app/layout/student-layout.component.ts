@@ -14,23 +14,14 @@ export class StudentLayoutComponent implements OnInit, OnDestroy {
   protected readonly theme = inject(ThemeService);
   private readonly el = inject(ElementRef);
   private resizeHandler = () => this.setAppHeight();
-  private vpResizeHandler = () => this.setAppHeight();
 
   ngOnInit(): void {
     this.setAppHeight();
     window.addEventListener('resize', this.resizeHandler);
-    // Bug 5: also respond to visualViewport resize so the software keyboard
-    // shrinks the layout instead of hiding inputs underneath it.
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', this.vpResizeHandler);
-    }
   }
 
   ngOnDestroy(): void {
     window.removeEventListener('resize', this.resizeHandler);
-    if (window.visualViewport) {
-      window.visualViewport.removeEventListener('resize', this.vpResizeHandler);
-    }
   }
 
   /**
@@ -38,10 +29,10 @@ export class StudentLayoutComponent implements OnInit, OnDestroy {
    * do NOT reach the physical screen bottom — they stop at the safe-area edge,
    * leaving a ~34px gap (home indicator zone).
    *
-   * When no keyboard is open, visualViewport.height ≈ screen.height so the
-   * nav still reaches the physical bottom. When the software keyboard opens,
-   * visualViewport.height shrinks automatically, keeping focused inputs visible
-   * above the keyboard (Bug 5 fix).
+   * `window.screen.height` IS the true physical screen height (852px on iPhone
+   * 16 Pro). In standalone mode we use it to force the layout to fill the
+   * entire physical screen. On desktop / non-standalone we fall back to
+   * `window.innerHeight`.
    */
   private setAppHeight(): void {
     const isStandalone =
@@ -49,12 +40,11 @@ export class StudentLayoutComponent implements OnInit, OnDestroy {
       window.matchMedia('(display-mode: standalone)').matches;
 
     if (isStandalone) {
-      // Prefer visualViewport.height: keyboard-aware on iOS 13+.
-      // Fall back to screen.height on older browsers.
-      const h = window.visualViewport
-        ? window.visualViewport.height
-        : window.screen.height;
-      document.documentElement.style.height = h + 'px';
+      // Force html element to physical screen height — this is the ONLY
+      // way to make the flex chain reach the home-indicator zone on iOS PWA,
+      // because 100vh/100dvh and position:fixed bottom:0 all stop at the
+      // safe-area edge (~34px above the physical screen bottom).
+      document.documentElement.style.height = window.screen.height + 'px';
     }
   }
 }
